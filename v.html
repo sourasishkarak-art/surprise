@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? - For Rishita</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.8s ease-in-out;
+            padding: 20px;
+            color: #333;
+            text-align: center;
+        }
+        .page.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .page.fade-out {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+        /* Unique backgrounds for each page */
+        #page1 { background: linear-gradient(135deg, #ff9a9e, #fecfef, #ffecd2); }
+        #page2 { background: linear-gradient(135deg, #a8edea, #fed6e3, #d299c2); }
+        #page3 { background: linear-gradient(135deg, #ffecd2, #fcb69f, #ff9a9e); }
+        #page4 { background: linear-gradient(135deg, #fecfef, #a8edea, #d299c2); }
+        #page5 { background: linear-gradient(135deg, #ff9a9e, #d299c2, #fcb69f); }
+        #page6 { background: linear-gradient(135deg, #fed6e3, #ffecd2, #a8edea); }
+        #page7 { background: linear-gradient(135deg, #fcb69f, #fecfef, #ff9a9e); }
+        #page8 { background: linear-gradient(135deg, #d299c2, #fed6e3, #a8edea); }
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #e91e63;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            margin: 20px 0;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        #yes-btn {
+            background: #4caf50;
+            color: white;
+        }
+        #yes-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+        #no-btn {
+            background: #f44336;
+            color: white;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        .next-btn {
+            background: #2196f3;
+            color: white;
+        }
+        .next-btn:hover {
+            background: #1976d2;
+            transform: scale(1.05);
+        }
+        .heart {
+            color: #e91e63;
+            font-size: 2em;
+        }
+        .message {
+            font-size: 1.3em;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+        .date {
+            font-style: italic;
+            color: #666;
+        }
+        .emoji {
+            font-size: 1.5em;
+        }
+        .cute-box {
+            background: rgba(255, 182, 193, 0.8);
+            border: 2px solid #e91e63;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .cute-box::before {
+            content: '💕';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-size: 1.5em;
+        }
+        .cute-box::after {
+            content: '💕';
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            font-size: 1.5em;
+        }
+        /* Floating hearts animation */
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .heart-float {
+            position: absolute;
+            font-size: 2em;
+            color: rgba(233, 30, 99, 0.6);
+            animation: float 6s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        /* Custom transitions for each page change */
+        .slide-right { transform: translateX(100%); }
+        .fade-in { opacity: 0; transform: scale(0.9); }
+        .zoom-in { opacity: 0; transform: scale(0.5); }
+        .rotate-in { opacity: 0; transform: rotate(-10deg) scale(0.8); }
+        .bounce-in { opacity: 0; transform: scale(0.3); }
+        .flip-in { opacity: 0; transform: rotateY(90deg); }
+        .slide-up { opacity: 0; transform: translateY(50px); }
+    </style>
+</head>
+<body>
+    <!-- Page 1: Initial Question -->
+    <div id="page1" class="page active">
+        <div class="floating-hearts">
+            <div class="heart-float" style="left: 10%; animation-delay: 0s;">❤️</div>
+            <div class="heart-float" style="left: 30%; animation-delay: 1s;">💕</div>
+            <div class="heart-float" style="left: 50%; animation-delay: 2s;">💖</div>
+            <div class="heart-float" style="left: 70%; animation-delay: 3s;">🥰</div>
+            <div class="heart-float" style="left: 90%; animation-delay: 4s;">🌹</div>
+        </div>
+        <div class="container">
+            <h1>Will You Be My Valentine? <span class="heart">❤️</span></h1>
+            <div class="buttons">
+                <button id="yes-btn">Yes</button>
+                <button id="no-btn" disabled>No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 2: First Message -->
+    <div id="page2" class="page">
+        <div class="floating-hearts">
+            <div class="heart-float" style="left: 20%; animation-delay: 0.5s;">💕</div>
+            <div class="heart-float" style="left: 40%; animation-delay: 1.5s;">🌸</div>
+            <div class="heart-float" style="left: 60%; animation-delay: 2.5s;">💖</div>
+            <div class="heart-float" style="left: 80%; animation-delay: 3.5s;">🥰</div>
+        </div>
+        <div class="container">
+            <h1>My Dearest Rishita <span class="heart">💕</span></h1>
+            <p class="message">From the very first moment our paths crossed on April 20, 2025, you've woven yourself into the fabric of my heart, becoming the gentle light that guides me through every day. Saying yes to being my Valentine isn't just a word—it's a promise of the deep, unwavering love I hold for you, my sweet Rishita. Your presence fills my world with warmth and joy, and I cherish you more than all the stars in the sky. <span class="emoji">🌹</span></p>
+            <button class="next-btn" onclick="nextPage(2)">Next</button>
+        </div>
+    </div>
+
+    <!-- Page 3: Second Message -->
+    <div id="page3" class="page">
+        <div class="floating-hearts">
+            <div class="heart-float" style="left: 15%; animation-delay: 1s;">✨</div>
+            <div class="heart-float" style="left: 35%; animation-delay: 2s;">💖</div>
+            <div class="heart-float" style="left: 55%; animation-delay: 3s;">🌟</div>
+            <div class="heart-float" style="left: 75%; animation-delay: 4s;">🥰</div>
+        </div>
+        <div class="container">
+            <h1>Forever My Love <span class="heart">🥰</span></h1>
+            <p class="message">Rishita, my love, you transform the ordinary into extraordinary with your radiant smile that lights up my darkest days and your laughter that echoes like the sweetest symphony in my soul. Every moment with you feels like a precious gift, and I can't fathom a life without your gentle touch, your kind words, and the way you make me feel truly alive. You're my forever, my everything, and I promise to love you with all the care and tenderness you deserve. <span class="emoji">✨</span></p>
+            <button class="next-btn" onclick="nextPage(3)">Next</button>
+        </div>
+    </div>
+
+    <!-- Page 4: Third Message -->
+    <div id="page4" class="page">
+        <div class="floating-hearts">
+            <div class="heart-float" style="left: 25%; animation-delay: 0.5s;">💭</div>
+            <div class="heart-float" style="left: 45%; animation-delay: 1.5s;">💖</div>
+            <div class="heart-float" style="left: 65%; animation-delay: 2.5s;">🌟</div>
+            <div class="heart-float" style="left: 85%; animation-delay: 3.5s;">❤️</div>
+        </div>
+        <div class="container">
+            <h1>My Heart's Desire <span class="heart">💖</span></h1>
+            <p class="message">In your beautiful eyes, I see a future painted with vibrant colors of love, filled with endless adventures, cozy cuddles under the stars, and dreams we build together hand in hand. You're not just my girlfriend, Rishita—you're my dream come true, the one who completes me in ways I never knew possible. I vow to cherish every second we share, to support you, to make you feel loved and valued, because you are my heart's deepest desire and greatest treasure. <span class="emoji">🌟</span></p>
+            <button class="next-btn" onclick="nextPage(4)">Next</button>
+        </div>
+    </div>
+
+    <!-- Page 5: Fourth Message -->
+    <div id="page5" class="page">
+        <div class="floating-hearts">
+            <div class="heart-float" style="left: 10%; animation-delay: 1s;">🍫</div>
+            <div class="heart-float" style="left: 30%; animation-delay: 2s;">📖</div>
+            <div class="heart-float" style="left: 50%; animation-delay: 3s;">💕</div>
+            <div class="heart-float" style="left: 70%; animation-delay: 4s;">🥰</div>
+        </div>
+        <div class="container">
+            <h1>Sweet Memories <span class="heart">🍫</span></h1>
+            <p class="message">Remember our first date, Rishita? That magical beginning on April 20, 2025, sparked a love story that's sweeter than the finest chocolate and more enduring than time itself. Every day with you unfolds like a new chapter in our beautiful tale, filled with laughter, tenderness, and moments that make my heart swell with gratitude. I love you more with each passing second, and I promise to create countless more memories, holding your hand through every joy and challenge, with all the care and devotion you bring to my life. <span class="emoji">📖</span></p>
+            <button class="next-btn" onclick="nextPage(5)">Next</button>
+        </div>
+    </div>
+
+    <!-- Page 6: Fifth Message -->
+    <div id="page6" class="page">
+        <div class="floating-hearts">
+            <div class="heart-float" style="left: 20%; animation-delay: 0.5s;">🔥</div>
+            <div class="heart-float" style="left: 40%; animation-delay: 1.5s;">🌺</div>
+            <div class="heart-float" style="left: 60%; animation-delay: 2.5s;">💖</div>
+            <div class="heart-float" style="left: 80%; animation-delay: 3.5s;">❤️</div>
+        </div>
+        <div class="container">
+            <h1>My Eternal Flame <span class="heart">🔥</span></h1>
+            <p class="message">Rishita, you are the eternal flame that warms my soul, igniting passion and kindness in every corner of my being. Your beauty, both inside and out, inspires me to be a better person every day, and your love fuels my dreams with unwavering strength. As your boyfriend, I'm endlessly grateful for the privilege of loving you, of being there for you with open arms and a heart full of care. You mean the world to me, and I'll nurture our love like the precious flame it is. <span class="emoji">🌺</span></p>
+            <button class="next-btn" onclick="nextPage(6)">Next</button>
+        </div>
+    </div>
+
+    <!-- Page 7: Sixth Message -->
+    <div id="page7" class="page">
+        <div class="floating-hearts">
+            <div class="heart-float" style="left: 15%; animation-delay: 1s;">🏞️</div>
+            <div class="heart-float" style="left: 35%; animation-delay: 2s;">💭</div>
+            <div class="heart-float" style="left: 55%; animation-delay: 3s;">💕</div>
+            <div class="heart-float" style="left: 75%; animation-delay: 4s;">🥰</div>
+        </div>
+        <div class="container">
+            <h1>Dreams Together <span class="heart">💭</span></h1>
+            <p class="message">Hand in hand, we'll chase our dreams across vast landscapes of happiness, building a life rich with shared laughter, whispered secrets, and unbreakable bonds. You're my partner in every sense, Rishita—my confidant, my greatest joy, and the one who makes every adventure worthwhile. With gentle care and deep affection, I promise to walk beside you, supporting your dreams as you support mine, creating a tapestry of love that's woven with threads of trust, passion, and endless tenderness. <span class="emoji">🏞️</span></p>
+            <button class="next-btn" onclick="nextPage(7)">Next</button>
+        </div>
+    </div>
+
+    <!-- Page 8: Final Message -->
+    <div id="page8" class="page">
+        <div class="floating-hearts">
+            <div class="heart-float" style="left: 10%; animation-delay: 0s;">🎉</div>
+            <div class="heart-float" style="left: 30%; animation-delay: 1s;">❤️</div>
+            <div class="heart-float" style="left: 50%; animation-delay: 2s;">💕</div>
+            <div class="heart-float" style="left: 70%; animation-delay: 3s;">🥰</div>
+            <div class="heart-float" style="left: 90%; animation-delay: 4s;">🌹</div>
+        </div>
+        <div class="container">
+            <h1>Happy Valentine's Day! <span class="heart">❤️</span></h1>
+            <p class="message">My love for you grows stronger with every heartbeat, Rishita, blossoming like a garden in spring. Thank you for being mine, for filling my life with such profound joy and care. Forever yours, Sourasish—I promise to love you tenderly, to cherish our bond, and to create more beautiful memories together, wrapped in the warmth of our shared affection. You are my everything, and I adore you beyond words. <span class="emoji">🎉</span></p>
+            <div class="cute-box">
+                <p class="message">Honestly, I can't afford any gifts with money for you now, but the only thing I can afford is my love for you and only you, for the rest of my life. 💖</p>
+            </div>
+            <p class="date">Our love story began: April 20, 2025</p>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 8;
+
+        document.getElementById('yes-btn').addEventListener('click', function() {
+            nextPage(1);
+        });
+
+        function nextPage(fromPage) {
+            const current = document.getElementById('page' + fromPage);
+            const next = document.getElementById('page' + (fromPage + 1));
+            
+            if (next) {
+                current.classList.add('fade-out');
+                setTimeout(() => {
+                    current.classList.remove('active', 'fade-out');
+                    next.classList.add('active');
+                    currentPage = fromPage + 1;
+                }, 800);
+            }
+        }
+    </script>
+</body>
+</html>
